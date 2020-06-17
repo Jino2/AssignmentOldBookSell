@@ -160,7 +160,8 @@ public class App {
 		System.out.println("2. Delete Book Sell");
 		System.out.println("3. Search General Users");
 		System.out.println("4. Delete General Users");
-		System.out.println("5. Index Page");
+		System.out.println("5. Change Activate State");
+		System.out.println("6. Index Page");
 
 		index = scan.nextInt();
 		switch (index)
@@ -174,10 +175,21 @@ public class App {
 			this.main_2();
 			break;
 		case 3:
+			this.userSystem.printAllUsers();
+			this.main_2();
+			break;
 		case 4:
+			this.DeleteUser();
+			this.main_2();
+			break;
 		case 5: 
+			this.ChangeActive();
+			this.main_2();
+			break;
+		case 6:
 			this.user =null;
 			this.index();
+			break;
 		default:
 		}
 	}
@@ -223,9 +235,17 @@ public class App {
 		if(isAdmin)
 		{
 			BookSell sell_t = this.bookManager.Find(serial2del);
-			String sellerID = sell_t.getSellerID();
-			t=this.userSystem.Find(sellerID);
-			canDel = t.delBookSell(serial2del);
+			if(sell_t != null)
+			{
+				String sellerID = sell_t.getSellerID();
+				t=this.userSystem.Find(sellerID);
+				canDel = t.delBookSell(serial2del);
+			}
+			else
+			{
+				System.out.println("Wrong Input");
+				return ;
+			}
 		}
 		else
 		{
@@ -323,6 +343,47 @@ public class App {
 		{
 			sellerID = sell_t.getSellerID();
 			System.out.println("Seller : "+this.userSystem.getEmail(sellerID)+", Buyer : "+ this.userSystem.getEmail(buyerID));
+		}
+	}
+	void DeleteUser()
+	{
+		String id2del;
+		Scanner scan = new Scanner(System.in);
+		
+		System.out.println("--Delete User--");
+		System.out.println("Input ID to DELETE");
+		id2del = scan.next();
+		
+		int x[] = this.userSystem.DeleteAcc(id2del);
+		if(x != null)
+		{
+			for(int i =0; i<x.length;i++)
+			{
+				this.bookManager.delBookSell(x[i]);
+			}
+		}
+		else
+		{
+			System.out.println("FailDelete");
+		}
+	}
+	void ChangeActive()
+	{
+		String id2chn;
+		Scanner scan = new Scanner(System.in);
+		
+		System.out.println("--Change Active--");
+		System.out.println("Input ID to Change");
+		id2chn = scan.next();
+		
+		GeneralUser t = this.userSystem.Find(id2chn);
+		if(t != null)
+		{
+			t.changeActive();
+		}
+		else
+		{
+			System.out.println("input error");
 		}
 	}
 }

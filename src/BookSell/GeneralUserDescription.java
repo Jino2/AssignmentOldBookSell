@@ -49,5 +49,17 @@ public class GeneralUserDescription {
 				return i;
 		}
 		return null;
-	}	
+	}
+	void printDesc()
+	{
+		System.out.println("name : " + this.name);
+		System.out.println("Telephone # : " + this.Telephone);
+		System.out.println("Sell Book : ");
+		for(Integer item:this.sellBook)
+		{
+			System.out.println(item);
+		}
+		System.out.println("E-mail : " + this.Email);
+		System.out.println("Active : "+ this.active);
+	}
 }

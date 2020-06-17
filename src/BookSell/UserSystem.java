@@ -26,26 +26,30 @@ public class UserSystem {
 			return true;
 		}
 	}
-	int[] DeleteAcc(String ID)
+	public int[] DeleteAcc(String ID)
 	{
 		GeneralUser t = Find(ID);
 		int sellBook[];
 		if(t!=null)
 		{
-			//there exist user
-			int size = t.desc.sellBook.size();
-			sellBook = new int[size];
-			for(int i =0;i<size;i++)
+			if(t.desc.active)
 			{
-				sellBook[i] = t.desc.sellBook.elementAt(i);
+				System.out.println("Still Activated");
 			}
-			this.users.remove(t);
-			return sellBook;
+			else 
+			{
+				int size = t.desc.sellBook.size();
+				sellBook = new int[size];
+				for(int i =0;i<size;i++)
+				{
+					sellBook[i] = t.desc.sellBook.elementAt(i);
+				}
+				this.users.remove(t);
+				return sellBook;
+			}
+			//there exist user
 		}
-		else
-		{
-			return null;
-		}
+		return null;
 	}
 	boolean ChangeActive(String ID)
 	{
@@ -83,5 +87,12 @@ public class UserSystem {
 	{	
 		GeneralUser t = this.Find(ID);
 		return t.getEmail();
+	}
+	public void printAllUsers()
+	{
+		for(GeneralUser item: this.users)
+		{
+			item.printUser();
+		}
 	}
 }

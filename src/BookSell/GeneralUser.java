@@ -56,4 +56,10 @@ public class GeneralUser extends User{
 	{
 		return this.desc.active;
 	}
+	void printUser()
+	{
+		System.out.println("ID : "+ this.getID());
+		System.out.println("PW : "+ this.getPassword());
+		this.desc.printDesc();
+	}
 }
